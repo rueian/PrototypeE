@@ -25,25 +25,27 @@ public class BufferedPanel extends JPanel implements KeyListener {
         this.scene = scene;
 
         addKeyListener(this);
+        setFocusable(true);
+        requestFocus();
     }
 
     public void updatePosition(int x, int y) {
         this.x = x;
         this.y = y;
-        this.invalidate();
+        this.repaint();
     }
 
     public void paintComponent(Graphics g){
-        offScreen = createImage(600, 400);
+        offScreen = createImage(800, 600);
         offGraphics = offScreen.getGraphics();
 
         int i = x / 100;
         int j = y / 100;
 
-        int minI = i - 3;
-        int minJ = j - 2;
-        int maxI = i + 3;
-        int maxJ = j + 2;
+        int minI = i - 4;
+        int minJ = j - 3;
+        int maxI = i + 4;
+        int maxJ = j + 3;
 
         for (j = minJ; j < maxJ; j ++) {
             for(i = minI; i < maxI; i ++) {
@@ -52,7 +54,7 @@ public class BufferedPanel extends JPanel implements KeyListener {
             }
         }
 
-        g.drawImage(offScreen, -(x - (x/100)*100) - 50, -(y - (y/100)*100) - 50, this);
+        g.drawImage(offScreen, -(x - (x/100)*100) - 150, -(y - (y/100)*100) - 150, this);
     }
 
     public void update(Graphics g) {
@@ -61,25 +63,23 @@ public class BufferedPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        int keyCode = e.getKeyCode();
-//
-//        if (keyCode == KeyEvent.VK_LEFT)
-//            updatePosition(x - 25, y);
-//        else if (keyCode == KeyEvent.VK_RIGHT)
-//            updatePosition(x + 25, y);
-//        else if (keyCode == KeyEvent.VK_UP)
-//            updatePosition(x, y - 25);
-//        else if (keyCode == KeyEvent.VK_DOWN)
-//            updatePosition(x, y + 25);
+        int keyCode = e.getKeyCode();
+
+        if (keyCode == KeyEvent.VK_LEFT)
+            updatePosition(x - 25, y);
+        else if (keyCode == KeyEvent.VK_RIGHT)
+            updatePosition(x + 25, y);
+        else if (keyCode == KeyEvent.VK_UP)
+            updatePosition(x, y - 25);
+        else if (keyCode == KeyEvent.VK_DOWN)
+            updatePosition(x, y + 25);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }
